@@ -22,15 +22,15 @@ The [original TODO list](TODO.md) has been preserved for any future efforts.
 
 This is the original tab with a 2048x1536 image taken on my digital camera. If you're not sure what you are looking at, it is the upper-left corner of the image in the next picture. 
 
-!(doc/images/a2ie-original.png)
+![Original](doc/images/a2ie-original.png)
 
 Choose the image type to convert to and click the convert button. If you wish, you can save the raw Apple II data. Note that for lores and double lores, no screen holes are saved. 
 
-!(doc/images/a2ie-convert.png)
+![Converted](doc/images/a2ie-convert.png)
 
 If you want some ideas about compressability, click the compression tab. You can enter the "max size allowed" which I use to figure out if the image can fit into the memory I've allocated for it on the Apple II. Click the Compress button to run through all the possibilities. Those that fit in the size given are colored green, the rest are red. If the compression method fails for some reason, it does not show up (note that Bit Pack #1 is missing - it only works on images less than 64 pixels wide or high or something like that). Note that each compression method's results can be saved to disk. 
 
-!(doc/images/a2ie-compression.png)
+![Compression Tab](doc/images/a2ie-compression.png)
 
 # Installation
 
