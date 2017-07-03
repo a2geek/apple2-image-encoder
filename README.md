@@ -11,7 +11,7 @@ Currently supported Apple II graphic formats:
 Format | Width | Height | Colors
 ------ | ----- | ------ | ------ 
 Lores | 40 | 40 | Standard Apple 16 colors 
-Double | Lores | 80 | 40 | Standard Apple 16 colors 
+Double Lores | 80 | 40 | Standard Apple 16 colors 
 Super Hires | 320 | 200 | 16 palettes of 16 colors; each palette entry is 12 bit color (4 bits per red, green, blue). 
 
 Currently supported "compression" formats: RLE, Variable RLE, PackBits, 'deflate' method of Zip, GZip, BitPack #1 - #3 (my attempts and they're worthless).
