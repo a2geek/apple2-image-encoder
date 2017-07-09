@@ -7,14 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import a2geek.apple2.image.encoder.A2Image;
 import a2geek.apple2.image.encoder.encode.A2Encoder;
-import a2geek.apple2.image.encoder.encode.BitPack1;
-import a2geek.apple2.image.encoder.encode.BitPack2;
-import a2geek.apple2.image.encoder.encode.BitPack3;
-import a2geek.apple2.image.encoder.encode.GZipEncoder;
-import a2geek.apple2.image.encoder.encode.PackBitsEncoder;
-import a2geek.apple2.image.encoder.encode.RleEncoder;
-import a2geek.apple2.image.encoder.encode.VariableRleEncoder;
-import a2geek.apple2.image.encoder.encode.ZipEncoder;
+import a2geek.apple2.image.encoder.encode.A2EncoderFactory;
 import a2geek.apple2.image.encoder.util.ProgressListener;
 
 /**
@@ -25,7 +18,7 @@ import a2geek.apple2.image.encoder.util.ProgressListener;
  */
 @SuppressWarnings("serial")
 public class EncoderTableModel extends AbstractTableModel {
-	private List<A2Encoder> encoders = new ArrayList<A2Encoder>();
+	private final List<A2Encoder> results = new ArrayList<>();
 	private byte[] data = null;
 	private String[] headers = new String[] { "Type", "Original", "Compressed", "%" };
 	/**
@@ -33,30 +26,18 @@ public class EncoderTableModel extends AbstractTableModel {
 	 */
 	public EncoderTableModel(A2Image image, int maxSize, ProgressListener listener) {
 		this.data = image.getBytes();
-		
-		Class[] encoderClasses = new Class[] {
-			RleEncoder.class,
-			VariableRleEncoder.class,
-			PackBitsEncoder.class,
-			BitPack1.class,
-			BitPack2.class,
-			BitPack3.class,
-			GZipEncoder.class,
-			ZipEncoder.class
-		};
+
 		int count = 0;
-		for (Class encoderClass : encoderClasses) {
-			if (listener != null && listener.isCancelled()) return;
-			A2Encoder a2encoder = null;
+		int size = A2EncoderFactory.getEncoders().size();
+		for (A2Encoder encoder : A2EncoderFactory.getEncoders()) {
 			try {
-				a2encoder = (A2Encoder)encoderClass.newInstance();
+				if (listener != null && listener.isCancelled()) return;
 				count++;
-				if (listener != null) listener.update(count, encoderClasses.length, a2encoder.getTitle());
-				a2encoder.encode(image, maxSize);
-				encoders.add(a2encoder);
+				if (listener != null) listener.update(count, size, encoder.getTitle());
+				encoder.encode(image, maxSize);
+				results.add(encoder);
 			} catch (Throwable t) {
-				// FIXME ignore errors...
-				//ImageEncoderApp.showErrorDialog(a2encoder.getTitle(), t);
+				// Ignoring these as some are expected to throw errors if boundaries are missed
 			}
 		}
 	}
@@ -70,7 +51,7 @@ public class EncoderTableModel extends AbstractTableModel {
 	 * Answer with the number of rows.
 	 */
 	public int getRowCount() {
-		return encoders.size();
+		return results.size();
 	}
 	/**
 	 * Answer with the number of columns.
@@ -84,13 +65,13 @@ public class EncoderTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 		case 0:	
-			return encoders.get(rowIndex).getTitle();
+			return results.get(rowIndex).getTitle();
 		case 1:
 			return data.length;
 		case 2:
-			return encoders.get(rowIndex).getSize();
+			return results.get(rowIndex).getSize();
 		case 3:
-			return (encoders.get(rowIndex).getSize() * 100) / data.length;
+			return (results.get(rowIndex).getSize() * 100) / data.length;
 		default:
 			return "Unknown";
 		}
@@ -116,6 +97,6 @@ public class EncoderTableModel extends AbstractTableModel {
 	 * Answer with the specific A2Encoder.
 	 */
 	public A2Encoder getSelectedEncoder(int rowIndex) {
-		return encoders.get(rowIndex);
+		return results.get(rowIndex);
 	}
 }

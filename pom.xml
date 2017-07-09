@@ -1,18 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>a2geek.apple2</groupId>
 	<artifactId>apple2-image-encoder</artifactId>
-	<version>4.4.0-FINAL</version>
+	<version>5.0.0-SNAPSHOT</version>
 	<name>Apple II Image Encoder</name>
 	<description>A utility that got out of hand and became an application to move modern images to the Apple II platform.</description>
-	
+
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.shade.version>2.4.3</maven.shade.version>
+		<maven.shade.version>3.0.0</maven.shade.version>
 		<junit.version>4.12</junit.version>
+		<commons-compress.version>1.14</commons-compress.version>
 	</properties>
 
 	<dependencies>
@@ -21,6 +22,23 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>${commons-compress.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.brotli</groupId>
+			<artifactId>dec</artifactId>
+			<version>0.1.2</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.tukaani</groupId>
+			<artifactId>xz</artifactId>
+			<version>1.6</version>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
@@ -52,4 +70,5 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build></project>
+	</build>
+</project>
