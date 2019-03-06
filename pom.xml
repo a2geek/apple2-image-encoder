@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>a2geek.apple2</groupId>
 	<artifactId>apple2-image-encoder</artifactId>
-	<version>5.0.0-SNAPSHOT</version>
+	<version>4.4.1-FINAL</version>
 	<name>Apple II Image Encoder</name>
 	<description>A utility that got out of hand and became an application to move modern images to the Apple II platform.</description>
 
@@ -13,7 +13,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.shade.version>3.0.0</maven.shade.version>
 		<junit.version>4.12</junit.version>
-		<commons-compress.version>1.14</commons-compress.version>
 	</properties>
 
 	<dependencies>
@@ -26,7 +25,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
-			<version>${commons-compress.version}</version>
+			<version>[1.18,)</version>
 		</dependency>
 		<dependency>
 			<groupId>org.brotli</groupId>
